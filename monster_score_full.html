@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    :root { --main: #1e293b; --blue: #3b82f6; --red: #ef4444; --green: #10b981; --accent: #f59e0b; }
+    body { background: #f1f5f9; color: var(--main); font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 10px; }
+    h1 { text-align: center; font-size: 1.5rem; margin: 20px 0; letter-spacing: 2px; }
+    
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 15px; max-width: 1400px; margin: 0 auto; }
+    
+    .card { background: #fff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e2e8f0; }
+    .card-header { padding: 16px; background: #fff; border-bottom: 1px solid #f1f5f9; position: relative; }
+    .name { font-size: 1.2rem; font-weight: 800; color: #0f172a; padding-right: 80px; }
+    .score-badge { position: absolute; top: 16px; right: 16px; background: #0f172a; color: #fff; font-size: 11px; padding: 4px 10px; border-radius: 8px; font-weight: bold; }
+
+    .card-body { padding: 16px; flex-grow: 1; }
+    .stats-container { display: flex; justify-content: space-between; background: #f8fafc; padding: 12px; border-radius: 12px; margin-bottom: 16px; }
+    .stat-item { text-align: center; }
+    .stat-label { font-size: 9px; color: #94a3b8; display: block; margin-bottom: 2px; font-weight: bold; }
+    .stat-val { font-size: 14px; font-weight: 700; color: #334155; font-family: 'Consolas', monospace; }
+
+    .info-title { font-size: 11px; font-weight: 800; color: #64748b; margin: 15px 0 6px; display: flex; align-items: center; }
+    .info-title::after { content: ""; flex-grow: 1; height: 1px; background: #e2e8f0; margin-left: 10px; }
+    
+    .badge-container { display: flex; flex-wrap: wrap; gap: 4px; }
+    .badge { padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .weak { background: var(--red); }
+    .resist { background: var(--blue); }
+    .break { width: 100%; height: 0; }
+
+    .drop-box { background: #ecfdf5; border-radius: 10px; padding: 10px; }
+    .drop-item { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid #d1fae5; }
+    .drop-item:last-child { border-bottom: none; margin-bottom: 0; }
+    .drop-name { color: #065f46; font-weight: bold; }
+    .drop-rate { color: #10b981; font-family: monospace; font-weight: bold; }
+
+    .action-box { font-size: 12px; line-height: 1.6; color: #475569; background: #fffbeb; padding: 12px; border-radius: 10px; border-left: 4px solid var(--accent); }
+
+    @media (max-width: 480px) {
+        .grid { grid-template-columns: 1fr; }
+        body { padding: 5px; }
+    }
+</style>
+</head>
+<body>
+    <h1>ハイスコアメモ　2026-3月分<br>引用してくれれば掲載自由にどうぞ。<br>作成:@yu_</h1>
+    <div class="grid">
+
+        <div class="card">
+            <div class="card-header">
+                <div class="name">ぶたばなウサギ☆</div>
+                <span class="score-badge">Score: 1500</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">21</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">192</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">163</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">92</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">123</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container">なし</div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +6</span><span class="badge resist">しもやけ +6</span><span class="badge resist">かぜっぴき +6</span><span class="badge resist">どろだらけ +6</span><div class="break"></div><span class="badge resist">かんでん +6</span><span class="badge resist">みずびたし +6</span><span class="badge resist">ブラインド +6</span><span class="badge resist">のろい +6</span><div class="break"></div><span class="badge resist">どく +6</span><span class="badge resist">マヒ +6</span><span class="badge resist">ねむり +6</span><span class="badge resist">とつぜんし +4</span><div class="break"></div><span class="badge resist">攻撃ダウン +6</span><span class="badge resist">防御ダウン +6</span><span class="badge resist">素早さダウン +6</span><span class="badge resist">回避ダウン +6</span><div class="break"></div><span class="badge resist">ゆうわく +6</span><span class="badge resist">きょうふ +6</span><span class="badge resist">ふういん +6</span><span class="badge resist">ジャック +6</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・キズぐすりS</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">ぶたばなウサギ☆の 斬りつける!<br>ぶたばなウサギ☆の 全体斬り!<br>ぶたばなウサギ☆の パワーチャージ!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">バーサーカー☆</div>
+                <span class="score-badge">Score: 1800</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">31</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">315</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">432</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">134</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">175</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +9</span><span class="badge resist">土 +8</span><span class="badge weak">水 -5</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +10</span><span class="badge resist">しもやけ +8</span><span class="badge resist">かぜっぴき +6</span><span class="badge resist">どろだらけ +4</span><div class="break"></div><span class="badge resist">かんでん +6</span><span class="badge resist">みずびたし +2</span><span class="badge resist">ブラインド +4</span><span class="badge resist">のろい +8</span><div class="break"></div><span class="badge resist">どく +2</span><span class="badge resist">マヒ +6</span><span class="badge resist">ねむり +2</span><span class="badge resist">とつぜんし +4</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +4</span><span class="badge resist">素早さダウン +4</span><span class="badge resist">回避ダウン +8</span><div class="break"></div><span class="badge resist">ゆうわく +8</span><span class="badge resist">きょうふ +8</span><span class="badge resist">ふういん +8</span><span class="badge resist">ジャック +4</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ふっかつのくすり</span> <span class="drop-rate">16%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">バーサーカー☆は 炎のオノをふりおろした!<br>バーサーカー☆は オノでなぎはらった!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">ファイアバード☆</div>
+                <span class="score-badge">Score: 1800</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">31</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">441</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">226</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">201</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">292</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +9</span><span class="badge resist">氷 +8</span><span class="badge weak">水 -5</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +10</span><span class="badge resist">しもやけ +8</span><span class="badge resist">かぜっぴき +8</span><span class="badge resist">どろだらけ +8</span><div class="break"></div><span class="badge resist">かんでん +4</span><span class="badge resist">みずびたし +2</span><span class="badge resist">ブラインド +6</span><span class="badge resist">のろい +4</span><div class="break"></div><span class="badge resist">どく +4</span><span class="badge resist">マヒ +2</span><span class="badge resist">ねむり +7</span><span class="badge resist">とつぜんし +5</span><div class="break"></div><span class="badge resist">攻撃ダウン +4</span><span class="badge resist">防御ダウン +6</span><span class="badge resist">素早さダウン +8</span><span class="badge resist">回避ダウン +8</span><div class="break"></div><span class="badge resist">ゆうわく +3</span><span class="badge resist">きょうふ +4</span><span class="badge resist">ふういん +8</span><span class="badge resist">ジャック +2</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">16%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">ファイアバード☆は くちばしでつついてきた!<br>ファイアバード☆の ファイアブレス!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">サンダーエイプ☆</div>
+                <span class="score-badge">Score: 1800</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">31</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">378</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">242</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">201</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">195</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge weak">土 -5</span><span class="badge resist">雷 +9</span><span class="badge resist">闇 +8</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +4</span><span class="badge resist">しもやけ +6</span><span class="badge resist">かぜっぴき +4</span><span class="badge resist">どろだらけ +2</span><div class="break"></div><span class="badge resist">かんでん +10</span><span class="badge resist">みずびたし +6</span><span class="badge resist">ブラインド +4</span><span class="badge resist">のろい +8</span><div class="break"></div><span class="badge resist">どく +6</span><span class="badge resist">マヒ +9</span><span class="badge resist">ねむり +8</span><span class="badge resist">とつぜんし +2</span><div class="break"></div><span class="badge resist">攻撃ダウン +2</span><span class="badge resist">防御ダウン +3</span><span class="badge resist">素早さダウン +3</span><span class="badge resist">回避ダウン +7</span><div class="break"></div><span class="badge resist">ゆうわく +4</span><span class="badge resist">きょうふ +6</span><span class="badge resist">ふういん +8</span><span class="badge resist">ジャック +2</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ふっかつのくすり</span> <span class="drop-rate">16%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">サンダーエイプ☆は ひっかいた!<br>サンダーエイプ☆は 雷の呪文を唱えた!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">かみなりおに☆</div>
+                <span class="score-badge">Score: 1800</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">31</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">378</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">318</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">251</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">234</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +8</span><span class="badge weak">土 -5</span><span class="badge resist">雷 +9</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +8</span><span class="badge resist">しもやけ +4</span><span class="badge resist">かぜっぴき +7</span><span class="badge resist">どろだらけ +2</span><div class="break"></div><span class="badge resist">かんでん +10</span><span class="badge resist">みずびたし +5</span><span class="badge resist">ブラインド +3</span><span class="badge resist">のろい +4</span><div class="break"></div><span class="badge resist">どく +4</span><span class="badge resist">マヒ +8</span><span class="badge resist">ねむり +4</span><span class="badge resist">とつぜんし +3</span><div class="break"></div><span class="badge resist">攻撃ダウン +6</span><span class="badge resist">防御ダウン +3</span><span class="badge resist">素早さダウン +2</span><span class="badge resist">回避ダウン +6</span><div class="break"></div><span class="badge resist">ゆうわく +2</span><span class="badge resist">きょうふ +5</span><span class="badge resist">ふういん +6</span><span class="badge resist">ジャック +2</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">16%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">かみなりおに☆は オノをふりおろした!<br>かみなりおに☆の 強烈な一撃!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">アイスワーム☆</div>
+                <span class="score-badge">Score: 1800</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">31</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">504</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">226</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">251</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">214</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge weak">火 -5</span><span class="badge resist">氷 +9</span><span class="badge resist">土 +8</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +2</span><span class="badge resist">しもやけ +10</span><span class="badge resist">かぜっぴき +4</span><span class="badge resist">どろだらけ +8</span><div class="break"></div><span class="badge resist">かんでん +7</span><span class="badge resist">みずびたし +6</span><span class="badge resist">ブラインド +5</span><span class="badge resist">のろい +6</span><div class="break"></div><span class="badge resist">どく +10</span><span class="badge resist">マヒ +9</span><span class="badge resist">ねむり +8</span><span class="badge resist">とつぜんし +6</span><div class="break"></div><span class="badge resist">攻撃ダウン +7</span><span class="badge resist">防御ダウン +5</span><span class="badge resist">素早さダウン +6</span><span class="badge resist">回避ダウン +4</span><div class="break"></div><span class="badge resist">ゆうわく +5</span><span class="badge resist">きょうふ +5</span><span class="badge resist">ふういん +5</span><span class="badge resist">ジャック +6</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ふっかつのくすり</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">アイスワーム☆の 氷の糸!<br>アイスワーム☆の 氷の回転!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">フローズンバット☆</div>
+                <span class="score-badge">Score: 1600</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">31</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">315</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">318</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">201</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">390</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge weak">火 -5</span><span class="badge resist">氷 +9</span><span class="badge resist">闇 +8</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +2</span><span class="badge resist">しもやけ +10</span><span class="badge resist">かぜっぴき +8</span><span class="badge resist">どろだらけ +3</span><div class="break"></div><span class="badge resist">かんでん +3</span><span class="badge resist">みずびたし +4</span><span class="badge resist">ブラインド +10</span><span class="badge resist">のろい +8</span><div class="break"></div><span class="badge resist">どく +10</span><span class="badge resist">マヒ +5</span><span class="badge resist">ねむり +4</span><span class="badge resist">とつぜんし +5</span><div class="break"></div><span class="badge resist">攻撃ダウン +7</span><span class="badge resist">防御ダウン +9</span><span class="badge resist">素早さダウン +9</span><span class="badge resist">回避ダウン +8</span><div class="break"></div><span class="badge resist">ゆうわく +6</span><span class="badge resist">きょうふ +9</span><span class="badge resist">ふういん +6</span><span class="badge resist">ジャック +6</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">フローズンバット☆の 冷たい吸血!<br>フローズンバット☆の アイスウェーブ!<br>フローズンバット☆の 催眠波!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">アイスシープ☆</div>
+                <span class="score-badge">Score: 2100</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">41</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">766</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">351</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">229</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">546</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge weak">火 -5</span><span class="badge resist">氷 +9</span><span class="badge resist">雷 +8</span><span class="badge resist">光 +8</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +2</span><span class="badge resist">しもやけ +10</span><span class="badge resist">かぜっぴき +8</span><span class="badge resist">どろだらけ +6</span><div class="break"></div><span class="badge resist">かんでん +8</span><span class="badge resist">みずびたし +3</span><span class="badge resist">ブラインド +8</span><span class="badge resist">のろい +6</span><div class="break"></div><span class="badge resist">どく +4</span><span class="badge resist">マヒ +6</span><span class="badge resist">ねむり +10</span><span class="badge resist">とつぜんし +4</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +8</span><span class="badge resist">素早さダウン +8</span><span class="badge resist">回避ダウン +10</span><div class="break"></div><span class="badge resist">ゆうわく +4</span><span class="badge resist">きょうふ +6</span><span class="badge resist">ふういん +9</span><span class="badge resist">ジャック +7</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんぶなおし</span> <span class="drop-rate">16%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">アイスシープ☆の するどいツノ!<br>アイスシープ☆の アイスストライク!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">アイスフロッグ☆</div>
+                <span class="score-badge">Score: 2100</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">41</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">957</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">426</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">382</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">273</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge weak">火 -5</span><span class="badge resist">氷 +9</span><span class="badge resist">水 +9</span><span class="badge resist">闇 +7</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +2</span><span class="badge resist">しもやけ +10</span><span class="badge resist">かぜっぴき +6</span><span class="badge resist">どろだらけ +6</span><div class="break"></div><span class="badge resist">かんでん +4</span><span class="badge resist">みずびたし +9</span><span class="badge resist">ブラインド +4</span><span class="badge resist">のろい +7</span><div class="break"></div><span class="badge resist">どく +8</span><span class="badge resist">マヒ +4</span><span class="badge resist">ねむり +6</span><span class="badge resist">とつぜんし +5</span><div class="break"></div><span class="badge resist">攻撃ダウン +8</span><span class="badge resist">防御ダウン +10</span><span class="badge resist">素早さダウン +8</span><span class="badge resist">回避ダウン +6</span><div class="break"></div><span class="badge resist">ゆうわく +8</span><span class="badge resist">きょうふ +8</span><span class="badge resist">ふういん +8</span><span class="badge resist">ジャック +10</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">16%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">アイスフロッグ☆の ペロンアタック!<br>アイスフロッグ☆は アイスボールを吐いた!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">バブルフロッグ☆</div>
+                <span class="score-badge">Score: 2100</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">41</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">766</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">426</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">382</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">286</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">土 +8</span><span class="badge weak">雷 -5</span><span class="badge resist">水 +9</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +4</span><span class="badge resist">しもやけ +6</span><span class="badge resist">かぜっぴき +8</span><span class="badge resist">どろだらけ +8</span><div class="break"></div><span class="badge resist">かんでん +2</span><span class="badge resist">みずびたし +10</span><span class="badge resist">ブラインド +4</span><span class="badge resist">のろい +6</span><div class="break"></div><span class="badge resist">どく +8</span><span class="badge resist">マヒ +5</span><span class="badge resist">ねむり +10</span><span class="badge resist">とつぜんし +4</span><div class="break"></div><span class="badge resist">攻撃ダウン +4</span><span class="badge resist">防御ダウン +4</span><span class="badge resist">素早さダウン +5</span><span class="badge resist">回避ダウン +8</span><div class="break"></div><span class="badge resist">ゆうわく +5</span><span class="badge resist">きょうふ +4</span><span class="badge resist">ふういん +8</span><span class="badge resist">ジャック +5</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんぶなおし</span> <span class="drop-rate">16%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">バブルフロッグ☆の ペロンアタック!<br>バブルフロッグ☆は 水を吐いた!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">てっぽうオトシゴ☆</div>
+                <span class="score-badge">Score: 2100</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">41</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">478</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">305</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">205</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">327</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">氷 +8</span><span class="badge weak">雷 -5</span><span class="badge resist">水 +9</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +4</span><span class="badge resist">しもやけ +8</span><span class="badge resist">かぜっぴき +4</span><span class="badge resist">どろだらけ +6</span><div class="break"></div><span class="badge resist">かんでん +2</span><span class="badge resist">みずびたし +10</span><span class="badge resist">ブラインド +8</span><span class="badge resist">のろい +6</span><div class="break"></div><span class="badge resist">どく +2</span><span class="badge resist">マヒ +3</span><span class="badge resist">ねむり +7</span><span class="badge resist">とつぜんし +3</span><div class="break"></div><span class="badge resist">攻撃ダウン +4</span><span class="badge resist">防御ダウン +3</span><span class="badge resist">素早さダウン +5</span><span class="badge resist">回避ダウン +8</span><div class="break"></div><span class="badge resist">ゆうわく +4</span><span class="badge resist">きょうふ +6</span><span class="badge resist">ふういん +6</span><span class="badge resist">ジャック +4</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">16%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">てっぽうオトシゴ☆は つついた!<br>てっぽうオトシゴ☆の みずふんしゃ!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">みどりマタンゴ☆</div>
+                <span class="score-badge">Score: 2100</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">41</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">526</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">351</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">382</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">259</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge weak">氷 -5</span><span class="badge resist">風 +9</span><span class="badge resist">闇 +9</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +3</span><span class="badge resist">しもやけ +2</span><span class="badge resist">かぜっぴき +10</span><span class="badge resist">どろだらけ +8</span><div class="break"></div><span class="badge resist">かんでん +10</span><span class="badge resist">みずびたし +8</span><span class="badge resist">ブラインド +10</span><span class="badge resist">のろい +7</span><div class="break"></div><span class="badge resist">どく +10</span><span class="badge resist">マヒ +10</span><span class="badge resist">ねむり +10</span><span class="badge resist">とつぜんし +7</span><div class="break"></div><span class="badge resist">攻撃ダウン +3</span><span class="badge resist">防御ダウン +3</span><span class="badge resist">素早さダウン +3</span><span class="badge resist">回避ダウン +3</span><div class="break"></div><span class="badge resist">ゆうわく +10</span><span class="badge resist">きょうふ +8</span><span class="badge resist">ふういん +2</span><span class="badge resist">ジャック +8</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんぶなおし</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">みどりマタンゴ☆は のしかかってきた!<br>みどりマタンゴ☆は 胞子をまき散らした!<br>みどりマタンゴ☆は 胞子をまき散らした!<br>みどりマタンゴ☆は 胞子をまき散らした!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">ウィンドデビル☆</div>
+                <span class="score-badge">Score: 2100</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">41</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">670</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">305</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">153</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">546</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge weak">氷 -5</span><span class="badge resist">風 +9</span><span class="badge resist">雷 +9</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +8</span><span class="badge resist">しもやけ +2</span><span class="badge resist">かぜっぴき +10</span><span class="badge resist">どろだらけ +5</span><div class="break"></div><span class="badge resist">かんでん +10</span><span class="badge resist">みずびたし +6</span><span class="badge resist">ブラインド +3</span><span class="badge resist">のろい +9</span><div class="break"></div><span class="badge resist">どく +4</span><span class="badge resist">マヒ +4</span><span class="badge resist">ねむり +8</span><span class="badge resist">とつぜんし +8</span><div class="break"></div><span class="badge resist">攻撃ダウン +8</span><span class="badge resist">防御ダウン +9</span><span class="badge resist">素早さダウン +7</span><span class="badge resist">回避ダウン +7</span><div class="break"></div><span class="badge resist">ゆうわく +8</span><span class="badge resist">きょうふ +9</span><span class="badge resist">ふういん +5</span><span class="badge resist">ジャック +6</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">ウィンドデビル☆の いやしのりんぷん!<br>ウィンドデビル☆の たいあたり!<br>ウィンドデビル☆の スラップスピン!<br>ウィンドデビル☆の かいおんぱ!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">リーフホッグ☆</div>
+                <span class="score-badge">Score: 2500</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">51</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">769</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">387</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">307</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">457</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge weak">氷 -5</span><span class="badge resist">風 +9</span><span class="badge resist">土 +8</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +4</span><span class="badge resist">しもやけ +2</span><span class="badge resist">かぜっぴき +10</span><span class="badge resist">どろだらけ +8</span><div class="break"></div><span class="badge resist">かんでん +8</span><span class="badge resist">みずびたし +4</span><span class="badge resist">ブラインド +8</span><span class="badge resist">のろい +6</span><div class="break"></div><span class="badge resist">どく +7</span><span class="badge resist">マヒ +6</span><span class="badge resist">ねむり +5</span><span class="badge resist">とつぜんし +5</span><div class="break"></div><span class="badge resist">攻撃ダウン +8</span><span class="badge resist">防御ダウン +8</span><span class="badge resist">素早さダウン +10</span><span class="badge resist">回避ダウン +6</span><div class="break"></div><span class="badge resist">ゆうわく +6</span><span class="badge resist">きょうふ +8</span><span class="badge resist">ふういん +10</span><span class="badge resist">ジャック +7</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・キズぐすりS</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">リーフホッグ☆の ころがりとっしん!<br>リーフホッグ☆は ハリをとばした!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">かぜつかい☆</div>
+                <span class="score-badge">Score: 3000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">51</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1154</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">491</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">615</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">419</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge weak">氷 -5</span><span class="badge resist">風 +9</span><span class="badge resist">光 +8</span><span class="badge resist">闇 +8</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +7</span><span class="badge resist">しもやけ +2</span><span class="badge resist">かぜっぴき +10</span><span class="badge resist">どろだらけ +6</span><div class="break"></div><span class="badge resist">かんでん +4</span><span class="badge resist">みずびたし +6</span><span class="badge resist">ブラインド +4</span><span class="badge resist">のろい +8</span><div class="break"></div><span class="badge resist">どく +3</span><span class="badge resist">マヒ +4</span><span class="badge resist">ねむり +5</span><span class="badge resist">とつぜんし +6</span><div class="break"></div><span class="badge resist">攻撃ダウン +4</span><span class="badge resist">防御ダウン +10</span><span class="badge resist">素早さダウン +7</span><span class="badge resist">回避ダウン +6</span><div class="break"></div><span class="badge resist">ゆうわく +10</span><span class="badge resist">きょうふ +8</span><span class="badge resist">ふういん +10</span><span class="badge resist">ジャック +6</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・キズぐすりS</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">かぜつかい☆は あたりを風で包んだ!<br>かぜつかい☆の 防御ダウンの呪文!<br>かぜつかい☆は ひっかいてきた!<br>かぜつかい☆の 風の呪文!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">ゴーレム☆</div>
+                <span class="score-badge">Score: 3000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">51</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1282</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">677</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">717</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">266</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge weak">風 -5</span><span class="badge resist">土 +9</span><span class="badge resist">雷 +8</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +9</span><span class="badge resist">しもやけ +6</span><span class="badge resist">かぜっぴき +2</span><span class="badge resist">どろだらけ +10</span><div class="break"></div><span class="badge resist">かんでん +10</span><span class="badge resist">みずびたし +5</span><span class="badge resist">ブラインド +6</span><span class="badge resist">のろい +7</span><div class="break"></div><span class="badge resist">どく +8</span><span class="badge resist">マヒ +10</span><span class="badge resist">ねむり +6</span><span class="badge resist">とつぜんし +9</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +10</span><span class="badge resist">素早さダウン +10</span><span class="badge resist">回避ダウン +10</span><div class="break"></div><span class="badge resist">ゆうわく +2</span><span class="badge resist">きょうふ +2</span><span class="badge resist">ふういん +6</span><span class="badge resist">ジャック +6</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・キズぐすりS</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">ゴーレム☆の まもりの構え!<br>ゴーレム☆の ハンマーパンチ!<br>ゴーレム☆の マッドスプラッシュ!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">だいちのつかい☆</div>
+                <span class="score-badge">Score: 3000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">51</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">769</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">491</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">512</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">457</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +5</span><span class="badge resist">氷 +5</span><span class="badge weak">風 -5</span><span class="badge resist">土 +9</span><div class="break"></div><span class="badge resist">雷 +5</span><span class="badge resist">水 +5</span><span class="badge resist">光 +5</span><span class="badge resist">闇 +5</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +6</span><span class="badge resist">しもやけ +6</span><span class="badge resist">かぜっぴき +2</span><span class="badge resist">どろだらけ +10</span><div class="break"></div><span class="badge resist">かんでん +6</span><span class="badge resist">みずびたし +6</span><span class="badge resist">ブラインド +6</span><span class="badge resist">のろい +6</span><div class="break"></div><span class="badge resist">どく +3</span><span class="badge resist">マヒ +6</span><span class="badge resist">ねむり +3</span><span class="badge resist">とつぜんし +3</span><div class="break"></div><span class="badge resist">攻撃ダウン +3</span><span class="badge resist">防御ダウン +5</span><span class="badge resist">素早さダウン +5</span><span class="badge resist">回避ダウン +5</span><div class="break"></div><span class="badge resist">ゆうわく +10</span><span class="badge resist">きょうふ +4</span><span class="badge resist">ふういん +4</span><span class="badge resist">ジャック +4</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・キズぐすりS</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">だいちのつかい☆は ほうじょうの地!<br>だいちのつかい☆は ひっかいてきた!<br>だいちのつかい☆は 大地の呪文をとなえた!<br>だいちのつかい☆の 攻撃アップの呪文!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">ひかるチョウ☆</div>
+                <span class="score-badge">Score: 3000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">51</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">705</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">677</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">274</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">762</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">雷 +8</span><span class="badge resist">光 +9</span><span class="badge weak">闇 -5</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +7</span><span class="badge resist">しもやけ +6</span><span class="badge resist">かぜっぴき +3</span><span class="badge resist">どろだらけ +7</span><div class="break"></div><span class="badge resist">かんでん +8</span><span class="badge resist">みずびたし +6</span><span class="badge resist">ブラインド +10</span><span class="badge resist">のろい +2</span><div class="break"></div><span class="badge resist">どく +8</span><span class="badge resist">マヒ +4</span><span class="badge resist">ねむり +9</span><span class="badge resist">とつぜんし +5</span><div class="break"></div><span class="badge resist">攻撃ダウン +3</span><span class="badge resist">防御ダウン +6</span><span class="badge resist">素早さダウン +10</span><span class="badge resist">回避ダウン +10</span><div class="break"></div><span class="badge resist">ゆうわく +7</span><span class="badge resist">きょうふ +3</span><span class="badge resist">ふういん +10</span><span class="badge resist">ジャック +9</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・キズぐすりS</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">ひかるチョウ☆の たいあたり!<br>ひかるチョウ☆の いやしりんぷん!<br>ひかるチョウ☆の まぶしいりんぷん!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">おばけホイップ☆</div>
+                <span class="score-badge">Score: 2500</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">51</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1282</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">491</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">717</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">381</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">風 +8</span><span class="badge resist">光 +9</span><span class="badge weak">闇 -5</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +6</span><span class="badge resist">しもやけ +7</span><span class="badge resist">かぜっぴき +8</span><span class="badge resist">どろだらけ +4</span><div class="break"></div><span class="badge resist">かんでん +7</span><span class="badge resist">みずびたし +3</span><span class="badge resist">ブラインド +10</span><span class="badge resist">のろい +2</span><div class="break"></div><span class="badge resist">どく +2</span><span class="badge resist">マヒ +8</span><span class="badge resist">ねむり +10</span><span class="badge resist">とつぜんし +6</span><div class="break"></div><span class="badge resist">攻撃ダウン +6</span><span class="badge resist">防御ダウン +7</span><span class="badge resist">素早さダウン +8</span><span class="badge resist">回避ダウン +6</span><div class="break"></div><span class="badge resist">ゆうわく +4</span><span class="badge resist">きょうふ +8</span><span class="badge resist">ふういん +5</span><span class="badge resist">ジャック +6</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・キズぐすりS</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">おばけホイップ☆の 鼓舞の舞い!<br>おばけホイップ☆は ひっかいた!<br>おばけホイップ☆は なめてきた!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">タケノコデビル☆</div>
+                <span class="score-badge">Score: 5200</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">56</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1375</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">433</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">330</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">426</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">氷 +8</span><span class="badge weak">風 -5</span><span class="badge resist">土 +9</span><span class="badge resist">水 +8</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +3</span><span class="badge resist">しもやけ +3</span><span class="badge resist">かぜっぴき +2</span><span class="badge resist">どろだらけ +10</span><div class="break"></div><span class="badge resist">かんでん +6</span><span class="badge resist">みずびたし +8</span><span class="badge resist">ブラインド +5</span><span class="badge resist">のろい +7</span><div class="break"></div><span class="badge resist">どく +2</span><span class="badge resist">マヒ +8</span><span class="badge resist">ねむり +6</span><span class="badge resist">とつぜんし +6</span><div class="break"></div><span class="badge resist">攻撃ダウン +6</span><span class="badge resist">防御ダウン +10</span><span class="badge resist">素早さダウン +6</span><span class="badge resist">回避ダウン +6</span><div class="break"></div><span class="badge resist">ゆうわく +8</span><span class="badge resist">きょうふ +8</span><span class="badge resist">ふういん +10</span><span class="badge resist">ジャック +8</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんぶなおし</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">タケノコデビル☆の するどい眼光!<br>タケノコデビル☆の 突き!<br>タケノコデビル☆は フォークをふりまわした!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">リザードせんし☆</div>
+                <span class="score-badge">Score: 5200</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">56</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">825</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">633</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">770</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">487</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +8</span><span class="badge weak">風 -5</span><span class="badge resist">土 +9</span><span class="badge resist">光 +7</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +10</span><span class="badge resist">しもやけ +5</span><span class="badge resist">かぜっぴき +2</span><span class="badge resist">どろだらけ +10</span><div class="break"></div><span class="badge resist">かんでん +4</span><span class="badge resist">みずびたし +4</span><span class="badge resist">ブラインド +7</span><span class="badge resist">のろい +5</span><div class="break"></div><span class="badge resist">どく +8</span><span class="badge resist">マヒ +6</span><span class="badge resist">ねむり +4</span><span class="badge resist">とつぜんし +4</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +6</span><span class="badge resist">素早さダウン +6</span><span class="badge resist">回避ダウン +6</span><div class="break"></div><span class="badge resist">ゆうわく +4</span><span class="badge resist">きょうふ +10</span><span class="badge resist">ふういん +10</span><span class="badge resist">ジャック +4</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・アンテナパワー+2</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">リザードせんし☆は きりかかった!<br>リザードせんし☆の かぶと割り!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">しにがみドクロ☆</div>
+                <span class="score-badge">Score: 5200</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">56</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1100</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">457</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">440</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">385</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">土 +8</span><span class="badge weak">光 -5</span><span class="badge resist">闇 +9</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +3</span><span class="badge resist">しもやけ +7</span><span class="badge resist">かぜっぴき +7</span><span class="badge resist">どろだらけ +8</span><div class="break"></div><span class="badge resist">かんでん +8</span><span class="badge resist">みずびたし +4</span><span class="badge weak">ブラインド -5</span><span class="badge resist">のろい +9</span><div class="break"></div><span class="badge resist">どく +4</span><span class="badge resist">マヒ +6</span><span class="badge resist">ねむり +10</span><span class="badge resist">とつぜんし +2</span><div class="break"></div><span class="badge resist">攻撃ダウン +8</span><span class="badge resist">防御ダウン +8</span><span class="badge resist">素早さダウン +5</span><span class="badge resist">回避ダウン +7</span><div class="break"></div><span class="badge resist">ゆうわく +3</span><span class="badge resist">きょうふ +10</span><span class="badge resist">ふういん +4</span><span class="badge resist">ジャック +4</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんぶなおし</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">しにがみドクロ☆の 闇のまなざし!<br>しにがみドクロ☆の あくま斬り!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">ダークフライ☆</div>
+                <span class="score-badge">Score: 5200</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">56</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">687</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">633</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">294</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">446</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +8</span><span class="badge weak">光 -5</span><span class="badge resist">闇 +9</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +8</span><span class="badge resist">しもやけ +5</span><span class="badge resist">かぜっぴき +5</span><span class="badge resist">どろだらけ +3</span><div class="break"></div><span class="badge resist">かんでん +3</span><span class="badge resist">みずびたし +8</span><span class="badge weak">ブラインド -5</span><span class="badge resist">のろい +9</span><div class="break"></div><span class="badge resist">どく +8</span><span class="badge resist">マヒ +7</span><span class="badge resist">ねむり +2</span><span class="badge resist">とつぜんし +7</span><div class="break"></div><span class="badge resist">攻撃ダウン +9</span><span class="badge resist">防御ダウン +7</span><span class="badge resist">素早さダウン +4</span><span class="badge resist">回避ダウン +8</span><div class="break"></div><span class="badge resist">ゆうわく +9</span><span class="badge resist">きょうふ +7</span><span class="badge resist">ふういん +4</span><span class="badge resist">ジャック +6</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・アンテナパワー+2</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">ダークフライ☆の 怒りの雄叫び!<br>ダークフライ☆の こうげき!<br>ダークフライ☆の ダークブレス!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">しびれジェリー☆</div>
+                <span class="score-badge">Score: 4200</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">56</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">756</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">457</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">330</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">487</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">氷 +9</span><span class="badge weak">土 -5</span><span class="badge resist">雷 +9</span><span class="badge resist">水 +8</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +4</span><span class="badge resist">しもやけ +6</span><span class="badge resist">かぜっぴき +4</span><span class="badge resist">どろだらけ +2</span><div class="break"></div><span class="badge resist">かんでん +10</span><span class="badge resist">みずびたし +10</span><span class="badge resist">ブラインド +6</span><span class="badge resist">のろい +6</span><div class="break"></div><span class="badge resist">どく +8</span><span class="badge resist">マヒ +10</span><span class="badge resist">ねむり +2</span><span class="badge resist">とつぜんし +7</span><div class="break"></div><span class="badge resist">攻撃ダウン +8</span><span class="badge resist">防御ダウン +10</span><span class="badge resist">素早さダウン +6</span><span class="badge resist">回避ダウン +5</span><div class="break"></div><span class="badge resist">ゆうわく +10</span><span class="badge resist">きょうふ +6</span><span class="badge resist">ふういん +9</span><span class="badge resist">ジャック +10</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんぶなおし</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">しびれジェリー☆の たいあたり!<br>しびれジェリー☆は きみょうな泡を吐いた!<br>しびれジェリー☆は しびれる泡を吐いた!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">かみなりちょう☆</div>
+                <span class="score-badge">Score: 5200</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">56</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1237</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">523</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">440</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">609</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">風 +9</span><span class="badge weak">土 -5</span><span class="badge resist">雷 +9</span><span class="badge resist">光 +8</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +7</span><span class="badge resist">しもやけ +4</span><span class="badge resist">かぜっぴき +10</span><span class="badge resist">どろだらけ +2</span><div class="break"></div><span class="badge resist">かんでん +10</span><span class="badge resist">みずびたし +6</span><span class="badge resist">ブラインド +4</span><span class="badge resist">のろい +4</span><div class="break"></div><span class="badge resist">どく +5</span><span class="badge resist">マヒ +8</span><span class="badge resist">ねむり +6</span><span class="badge resist">とつぜんし +2</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +8</span><span class="badge resist">素早さダウン +10</span><span class="badge resist">回避ダウン +8</span><div class="break"></div><span class="badge resist">ゆうわく +8</span><span class="badge resist">きょうふ +10</span><span class="badge resist">ふういん +9</span><span class="badge resist">ジャック +7</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・アンテナパワー+2</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">かみなりちょう☆の 力強いおたけび!<br>かみなりちょう☆の くちばしこうげき!<br>かみなりちょう☆の 電撃ダイブ!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">ファイアミスト☆</div>
+                <span class="score-badge">Score: 11000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">61</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">868</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">575</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">834</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">511</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +9</span><span class="badge resist">氷 +5</span><span class="badge resist">風 +5</span><span class="badge resist">土 +5</span><div class="break"></div><span class="badge resist">雷 +5</span><span class="badge weak">水 -5</span><span class="badge resist">光 +5</span><span class="badge resist">闇 +8</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +10</span><span class="badge resist">しもやけ +4</span><span class="badge resist">かぜっぴき +3</span><span class="badge resist">どろだらけ +9</span><div class="break"></div><span class="badge resist">かんでん +6</span><span class="badge weak">みずびたし -5</span><span class="badge resist">ブラインド +2</span><span class="badge resist">のろい +8</span><div class="break"></div><span class="badge resist">どく +3</span><span class="badge resist">マヒ +10</span><span class="badge resist">ねむり +10</span><span class="badge resist">とつぜんし +7</span><div class="break"></div><span class="badge resist">攻撃ダウン +5</span><span class="badge resist">防御ダウン +8</span><span class="badge resist">素早さダウン +6</span><span class="badge resist">回避ダウン +6</span><div class="break"></div><span class="badge resist">ゆうわく +8</span><span class="badge resist">きょうふ +7</span><span class="badge resist">ふういん +7</span><span class="badge resist">ジャック +8</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんぶなおしS</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">ファイアミスト☆の こうげき!<br>ファイアミスト☆の ファイアーミスト!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">れんごくウッキー☆</div>
+                <span class="score-badge">Score: 11000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">61</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1737</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">908</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">417</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">613</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +9</span><span class="badge resist">氷 +8</span><span class="badge weak">水 -5</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +10</span><span class="badge resist">しもやけ +8</span><span class="badge resist">かぜっぴき +8</span><span class="badge resist">どろだらけ +7</span><div class="break"></div><span class="badge resist">かんでん +3</span><span class="badge weak">みずびたし -5</span><span class="badge resist">ブラインド +6</span><span class="badge resist">のろい +6</span><div class="break"></div><span class="badge resist">どく +4</span><span class="badge resist">マヒ +6</span><span class="badge resist">ねむり +8</span><span class="badge resist">とつぜんし +4</span><div class="break"></div><span class="badge resist">攻撃ダウン +6</span><span class="badge resist">防御ダウン +3</span><span class="badge resist">素早さダウン +8</span><span class="badge resist">回避ダウン +10</span><div class="break"></div><span class="badge resist">ゆうわく +2</span><span class="badge resist">きょうふ +8</span><span class="badge resist">ふういん +6</span><span class="badge resist">ジャック +4</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">れんごくウッキー☆の おしりペンペン!<br>れんごくウッキー☆の 火炎斬り!<br>れんごくウッキー☆の おしりペンペン!<br>れんごくウッキー☆の 叩きつけ!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">コイせんし☆</div>
+                <span class="score-badge">Score: 11000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">61</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1563</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">545</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">556</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">562</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +8</span><span class="badge weak">雷 -5</span><span class="badge resist">水 +9</span><span class="badge resist">光 +8</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +8</span><span class="badge resist">しもやけ +2</span><span class="badge resist">かぜっぴき +7</span><span class="badge resist">どろだらけ +4</span><div class="break"></div><span class="badge resist">かんでん +2</span><span class="badge resist">みずびたし +10</span><span class="badge resist">ブラインド +8</span><span class="badge resist">のろい +5</span><div class="break"></div><span class="badge resist">どく +6</span><span class="badge resist">マヒ +6</span><span class="badge resist">ねむり +9</span><span class="badge resist">とつぜんし +4</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +10</span><span class="badge resist">素早さダウン +10</span><span class="badge resist">回避ダウン +10</span><div class="break"></div><span class="badge resist">ゆうわく +8</span><span class="badge resist">きょうふ +9</span><span class="badge resist">ふういん +9</span><span class="badge resist">ジャック +8</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんぶなおしS</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">コイせんし☆の おうえん!<br>コイせんし☆の すいみんの呪文!<br>コイせんし☆の こうげき!<br>コイせんし☆は 振り回した!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">いかしょうぐん☆</div>
+                <span class="score-badge">Score: 11000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">61</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1042</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">797</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">372</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">613</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">土 +8</span><span class="badge weak">雷 -5</span><span class="badge resist">水 +9</span><span class="badge resist">闇 +9</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +6</span><span class="badge resist">しもやけ +4</span><span class="badge resist">かぜっぴき +5</span><span class="badge resist">どろだらけ +8</span><div class="break"></div><span class="badge resist">かんでん +2</span><span class="badge resist">みずびたし +10</span><span class="badge resist">ブラインド +4</span><span class="badge resist">のろい +9</span><div class="break"></div><span class="badge resist">どく +8</span><span class="badge resist">マヒ +10</span><span class="badge resist">ねむり +5</span><span class="badge resist">とつぜんし +7</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +10</span><span class="badge resist">素早さダウン +10</span><span class="badge resist">回避ダウン +10</span><div class="break"></div><span class="badge resist">ゆうわく +8</span><span class="badge resist">きょうふ +7</span><span class="badge resist">ふういん +10</span><span class="badge resist">ジャック +10</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">いかしょうぐん☆の くしざし!<br>いかしょうぐん☆の 豪雨!<br>いかしょうぐん☆の うずしお斬り!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">バニラナイト☆</div>
+                <span class="score-badge">Score: 11000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">61</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1390</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">575</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">834</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">511</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">氷 +8</span><span class="badge resist">土 +8</span><span class="badge resist">光 +9</span><span class="badge weak">闇 -5</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +2</span><span class="badge resist">しもやけ +8</span><span class="badge resist">かぜっぴき +6</span><span class="badge resist">どろだらけ +4</span><div class="break"></div><span class="badge resist">かんでん +7</span><span class="badge resist">みずびたし +4</span><span class="badge resist">ブラインド +10</span><span class="badge resist">のろい +2</span><div class="break"></div><span class="badge resist">どく +6</span><span class="badge resist">マヒ +8</span><span class="badge resist">ねむり +4</span><span class="badge resist">とつぜんし +8</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +8</span><span class="badge resist">素早さダウン +6</span><span class="badge resist">回避ダウン +6</span><div class="break"></div><span class="badge resist">ゆうわく +10</span><span class="badge resist">きょうふ +6</span><span class="badge resist">ふういん +10</span><span class="badge resist">ジャック +10</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・アンテナパワー+2S</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">バニラナイト☆の てっぺきの構え!<br>バニラナイト☆は かばう姿勢をとった!<br>バニラナイト☆の バッシュ!<br>バニラナイト☆の 回転斬り!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">エンゼルフライ☆</div>
+                <span class="score-badge">Score: 11000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">61</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1216</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">659</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">372</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">766</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">風 +9</span><span class="badge resist">水 +7</span><span class="badge resist">光 +9</span><span class="badge weak">闇 -5</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +6</span><span class="badge resist">しもやけ +3</span><span class="badge resist">かぜっぴき +9</span><span class="badge resist">どろだらけ +3</span><div class="break"></div><span class="badge resist">かんでん +4</span><span class="badge resist">みずびたし +7</span><span class="badge resist">ブラインド +10</span><span class="badge resist">のろい +2</span><div class="break"></div><span class="badge resist">どく +10</span><span class="badge resist">マヒ +4</span><span class="badge resist">ねむり +9</span><span class="badge resist">とつぜんし +5</span><div class="break"></div><span class="badge resist">攻撃ダウン +6</span><span class="badge resist">防御ダウン +8</span><span class="badge resist">素早さダウン +10</span><span class="badge resist">回避ダウン +10</span><div class="break"></div><span class="badge resist">ゆうわく +8</span><span class="badge resist">きょうふ +8</span><span class="badge resist">ふういん +10</span><span class="badge resist">ジャック +6</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">エンゼルフライ☆の ホワイトパウダー!<br>エンゼルフライ☆の かがやくりんぷん!<br>エンゼルフライ☆の たいあたり!<br>エンゼルフライ☆の 天使のまなざし!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">ファントムホース☆</div>
+                <span class="score-badge">Score: 11000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">61</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1737</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">797</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">417</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">562</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">氷 +7</span><span class="badge resist">風 +8</span><span class="badge weak">光 -5</span><span class="badge resist">闇 +9</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +3</span><span class="badge resist">しもやけ +7</span><span class="badge resist">かぜっぴき +8</span><span class="badge resist">どろだらけ +6</span><div class="break"></div><span class="badge resist">かんでん +4</span><span class="badge resist">みずびたし +6</span><span class="badge resist">ブラインド +2</span><span class="badge resist">のろい +10</span><div class="break"></div><span class="badge resist">どく +10</span><span class="badge resist">マヒ +7</span><span class="badge resist">ねむり +10</span><span class="badge resist">とつぜんし +7</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +10</span><span class="badge resist">素早さダウン +10</span><span class="badge resist">回避ダウン +10</span><div class="break"></div><span class="badge resist">ゆうわく +6</span><span class="badge resist">きょうふ +10</span><span class="badge resist">ふういん +8</span><span class="badge resist">ジャック +8</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ふっかつのくすりS</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">ファントムホース☆の つらぬく突き!<br>ファントムホース☆の 悪魔のいななき!<br>ファントムホース☆の とっしん!<br>ファントムホース☆の のろいのさけび!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">ももいろハム☆</div>
+                <span class="score-badge">Score: 20000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">21</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">192</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">163</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">215</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">99999</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +8</span><span class="badge resist">氷 +8</span><span class="badge resist">風 +8</span><span class="badge resist">土 +8</span><div class="break"></div><span class="badge resist">雷 +8</span><span class="badge resist">水 +8</span><span class="badge resist">光 +8</span><span class="badge resist">闇 +8</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +8</span><span class="badge resist">しもやけ +8</span><span class="badge resist">かぜっぴき +8</span><span class="badge resist">どろだらけ +8</span><div class="break"></div><span class="badge resist">かんでん +8</span><span class="badge resist">みずびたし +8</span><span class="badge resist">ブラインド +8</span><span class="badge resist">のろい +8</span><div class="break"></div><span class="badge resist">どく +8</span><span class="badge resist">マヒ +8</span><span class="badge resist">ねむり +8</span><span class="badge resist">とつぜんし +10</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +10</span><span class="badge resist">素早さダウン +10</span><span class="badge resist">回避ダウン +10</span><div class="break"></div><span class="badge resist">ゆうわく +10</span><span class="badge resist">きょうふ +10</span><span class="badge resist">ふういん +10</span><span class="badge resist">ジャック +8</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・アンテナパワー+2</span> <span class="drop-rate">33%</span></div><div class="drop-item"><span class="drop-name">・アンテナパワー+2S</span> <span class="drop-rate">20%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">ももいろハム☆の たいあたり!<br>ももいろハム☆は 回復した !<br>ももいろハム☆は 逃げ出した!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">ゴールデンハム☆</div>
+                <span class="score-badge">Score: 30000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">51</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">641</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">387</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">717</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">99999</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +8</span><span class="badge resist">氷 +8</span><span class="badge resist">風 +8</span><span class="badge resist">土 +8</span><div class="break"></div><span class="badge resist">雷 +8</span><span class="badge resist">水 +8</span><span class="badge resist">光 +8</span><span class="badge resist">闇 +8</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +8</span><span class="badge resist">しもやけ +8</span><span class="badge resist">かぜっぴき +8</span><span class="badge resist">どろだらけ +8</span><div class="break"></div><span class="badge resist">かんでん +8</span><span class="badge resist">みずびたし +8</span><span class="badge resist">ブラインド +8</span><span class="badge resist">のろい +8</span><div class="break"></div><span class="badge resist">どく +8</span><span class="badge resist">マヒ +8</span><span class="badge resist">ねむり +8</span><span class="badge resist">とつぜんし +10</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +10</span><span class="badge resist">素早さダウン +10</span><span class="badge resist">回避ダウン +10</span><div class="break"></div><span class="badge resist">ゆうわく +10</span><span class="badge resist">きょうふ +10</span><span class="badge resist">ふういん +10</span><span class="badge resist">ジャック +8</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">33%</span></div><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすりS</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">ゴールデンハム☆の たいあたり!<br>ゴールデンハム☆は 回復した !<br>ゴールデンハム☆は 逃げ出した!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">タイブーン☆</div>
+                <span class="score-badge">Score: 25000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">41</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">2106</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">351</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">382</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">409</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge weak">氷 -3</span><span class="badge resist">風 +9</span><span class="badge resist">土 +6</span><span class="badge resist">闇 +6</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +6</span><span class="badge resist">しもやけ +4</span><span class="badge resist">かぜっぴき +10</span><span class="badge resist">どろだらけ +9</span><div class="break"></div><span class="badge resist">かんでん +4</span><span class="badge resist">みずびたし +8</span><span class="badge resist">ブラインド +8</span><span class="badge resist">のろい +9</span><div class="break"></div><span class="badge resist">どく +8</span><span class="badge resist">マヒ +9</span><span class="badge resist">ねむり +10</span><span class="badge resist">とつぜんし +10</span><div class="break"></div><span class="badge resist">攻撃ダウン +6</span><span class="badge resist">防御ダウン +6</span><span class="badge resist">素早さダウン +6</span><span class="badge resist">回避ダウン +6</span><div class="break"></div><span class="badge resist">ゆうわく +10</span><span class="badge resist">きょうふ +9</span><span class="badge resist">ふういん +10</span><span class="badge resist">ジャック +10</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">50%</span></div><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすりS</span> <span class="drop-rate">20%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">タイブーン☆の とくぎふうじの風!<br>タイブーン☆の 攻撃力ダウンの風!<br>タイブーン☆の ナックル!<br>タイブーン☆の リングレーザー!<br>タイブーン☆の 大震動!<br>タイブーン☆の 超電磁サイクロン!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">イフリート☆</div>
+                <span class="score-badge">Score: 40000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">61</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">3475</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">718</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">556</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">766</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +9</span><span class="badge resist">氷 +8</span><span class="badge weak">土 -2</span><span class="badge weak">水 -5</span><div class="break"></div><span class="badge resist">闇 +8</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +10</span><span class="badge resist">しもやけ +7</span><span class="badge resist">かぜっぴき +6</span><span class="badge resist">どろだらけ +4</span><div class="break"></div><span class="badge resist">かんでん +8</span><span class="badge resist">みずびたし +2</span><span class="badge resist">ブラインド +6</span><span class="badge resist">のろい +4</span><div class="break"></div><span class="badge resist">どく +6</span><span class="badge resist">マヒ +10</span><span class="badge resist">ねむり +8</span><span class="badge resist">とつぜんし +10</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +10</span><span class="badge resist">素早さダウン +10</span><span class="badge resist">回避ダウン +10</span><div class="break"></div><span class="badge resist">ゆうわく +8</span><span class="badge resist">きょうふ +10</span><span class="badge resist">ふういん +9</span><span class="badge resist">ジャック +10</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">50%</span></div><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすりS</span> <span class="drop-rate">20%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">イフリート☆の 超熱風!<br>イフリート☆の 反撃!<br>イフリート☆の ホーンアッパー!<br>イフリート☆の 炎のおたけび!<br>イフリート☆の 死のおたけび!<br>イフリート☆は とっしんしてきた!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">ももいろにゅうし</div>
+                <span class="score-badge">Score: 60000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">41</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">191</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">305</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">99999</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">99999</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +10</span><span class="badge resist">氷 +10</span><span class="badge resist">風 +10</span><span class="badge resist">土 +10</span><div class="break"></div><span class="badge resist">雷 +10</span><span class="badge resist">水 +10</span><span class="badge resist">光 +10</span><span class="badge resist">闇 +10</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +10</span><span class="badge resist">しもやけ +10</span><span class="badge resist">かぜっぴき +10</span><span class="badge resist">どろだらけ +10</span><div class="break"></div><span class="badge resist">かんでん +10</span><span class="badge resist">みずびたし +10</span><span class="badge resist">ブラインド +10</span><span class="badge resist">のろい +10</span><div class="break"></div><span class="badge resist">どく +10</span><span class="badge resist">マヒ +8</span><span class="badge resist">ねむり +8</span><span class="badge resist">とつぜんし +10</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +10</span><span class="badge resist">素早さダウン +10</span><span class="badge resist">回避ダウン +5</span><div class="break"></div><span class="badge resist">ゆうわく +8</span><span class="badge resist">きょうふ +8</span><span class="badge resist">ふういん +10</span><span class="badge resist">ジャック +10</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・アンテナパワー+2</span> <span class="drop-rate">33%</span></div><div class="drop-item"><span class="drop-name">・アンテナパワー+4</span> <span class="drop-rate">12%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">ももいろにゅうしの ちゅうがえり!<br>ももいろにゅうしの ウインク!<br>ももいろにゅうしは 逃げ出した!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">あぶないはこ</div>
+                <span class="score-badge">Score: 20000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">41</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1149</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">351</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">382</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">327</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +4</span><span class="badge resist">氷 +4</span><span class="badge resist">風 +4</span><span class="badge resist">土 +4</span><div class="break"></div><span class="badge resist">雷 +4</span><span class="badge resist">水 +4</span><span class="badge resist">光 +4</span><span class="badge resist">闇 +4</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +4</span><span class="badge resist">しもやけ +4</span><span class="badge resist">かぜっぴき +4</span><span class="badge resist">どろだらけ +4</span><div class="break"></div><span class="badge resist">かんでん +4</span><span class="badge resist">みずびたし +4</span><span class="badge resist">ブラインド +4</span><span class="badge resist">のろい +4</span><div class="break"></div><span class="badge resist">どく +2</span><span class="badge resist">マヒ +10</span><span class="badge resist">ねむり +10</span><span class="badge resist">とつぜんし +10</span><div class="break"></div><span class="badge resist">攻撃ダウン +8</span><span class="badge resist">防御ダウン +8</span><span class="badge resist">素早さダウン +8</span><span class="badge resist">回避ダウン +8</span><div class="break"></div><span class="badge resist">ゆうわく +10</span><span class="badge resist">きょうふ +10</span><span class="badge resist">ふういん +10</span><span class="badge resist">ジャック +10</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・アンテナパワー+4</span> <span class="drop-rate">25%</span></div><div class="drop-item"><span class="drop-name">・アンテナパワー+2S</span> <span class="drop-rate">10%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">あぶないはこは 箱に隠れた!<br>あぶないはこは 斬りかかってきた!<br>あぶないはこの 死のおどり!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">あぶないはこ</div>
+                <span class="score-badge">Score: 20000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">41</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">1149</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">351</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">382</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">327</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge resist">火 +10</span><span class="badge resist">氷 +10</span><span class="badge resist">風 +10</span><span class="badge resist">土 +10</span><div class="break"></div><span class="badge resist">雷 +10</span><span class="badge resist">水 +10</span><span class="badge resist">光 +10</span><span class="badge resist">闇 +10</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +10</span><span class="badge resist">しもやけ +10</span><span class="badge resist">かぜっぴき +10</span><span class="badge resist">どろだらけ +10</span><div class="break"></div><span class="badge resist">かんでん +10</span><span class="badge resist">みずびたし +10</span><span class="badge resist">ブラインド +10</span><span class="badge resist">のろい +10</span><div class="break"></div><span class="badge resist">どく +10</span><span class="badge resist">マヒ +10</span><span class="badge resist">ねむり +10</span><span class="badge resist">とつぜんし +10</span><div class="break"></div><span class="badge resist">攻撃ダウン +10</span><span class="badge resist">防御ダウン +10</span><span class="badge resist">素早さダウン +10</span><span class="badge resist">回避ダウン +10</span><div class="break"></div><span class="badge resist">ゆうわく +6</span><span class="badge resist">きょうふ +6</span><span class="badge resist">ふういん +4</span><span class="badge resist">ジャック +6</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・アンテナパワー+4</span> <span class="drop-rate">25%</span></div><div class="drop-item"><span class="drop-name">・アンテナパワー+2S</span> <span class="drop-rate">10%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">あぶないはこは 箱からとびだした!<br>あぶないはこは 隠れている…<br>あぶないはこは 呪文をとなえた!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">アイスデーモン☆</div>
+                <span class="score-badge">Score: 20000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">41</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">2298</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">426</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">382</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">300</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge weak">火 -5</span><span class="badge resist">氷 +9</span><span class="badge resist">土 +7</span></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +2</span><span class="badge resist">しもやけ +10</span><span class="badge resist">かぜっぴき +6</span><span class="badge resist">どろだらけ +7</span><div class="break"></div><span class="badge resist">かんでん +6</span><span class="badge resist">みずびたし +8</span><span class="badge resist">ブラインド +4</span><span class="badge resist">のろい +7</span><div class="break"></div><span class="badge resist">どく +8</span><span class="badge resist">マヒ +6</span><span class="badge resist">ねむり +7</span><span class="badge resist">とつぜんし +10</span><div class="break"></div><span class="badge resist">攻撃ダウン +6</span><span class="badge resist">防御ダウン +9</span><span class="badge resist">素早さダウン +9</span><span class="badge resist">回避ダウン +4</span><div class="break"></div><span class="badge resist">ゆうわく +7</span><span class="badge resist">きょうふ +8</span><span class="badge resist">ふういん +8</span><span class="badge resist">ジャック +6</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">50%</span></div><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすりS</span> <span class="drop-rate">20%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">アイスデーモン☆の クロノスタシスブレス!<br>アイスデーモン☆の こうげき!<br>アイスデーモン☆の アイスボール!<br>アイスデーモン☆の ワイドダイビング!</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="name">ガイアドラゴン☆</div>
+                <span class="score-badge">Score: 35000</span>
+            </div>
+            <div class="card-body">
+                <div class="stats-container">
+                    <div class="stat-item"><span class="stat-label">LV</span><span class="stat-val">61</span></div>
+                    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val">3822</span></div>
+                    <div class="stat-item"><span class="stat-label">ATK</span><span class="stat-val">859</span></div>
+                    <div class="stat-item"><span class="stat-label">DEF</span><span class="stat-val">834</span></div>
+                    <div class="stat-item"><span class="stat-label">SPD</span><span class="stat-val">536</span></div>
+                </div>
+                
+                <div class="info-title">属性耐性</div>
+                <div class="badge-container"><span class="badge weak">風 -5</span><span class="badge resist">土 +9</span><span class="badge weak">水 -2</span><span class="badge resist">光 +8</span><div class="break"></div></div>
+                
+                <div class="info-title">異常耐性</div>
+                <div class="badge-container"><span class="badge resist">やけど +8</span><span class="badge resist">しもやけ +4</span><span class="badge resist">かぜっぴき +2</span><span class="badge resist">どろだらけ +10</span><div class="break"></div><span class="badge resist">かんでん +8</span><span class="badge resist">みずびたし +9</span><span class="badge resist">ブラインド +8</span><span class="badge resist">のろい +5</span><div class="break"></div><span class="badge resist">どく +10</span><span class="badge resist">マヒ +10</span><span class="badge resist">ねむり +6</span><span class="badge resist">とつぜんし +10</span><div class="break"></div><span class="badge resist">攻撃ダウン +8</span><span class="badge resist">防御ダウン +9</span><span class="badge resist">素早さダウン +7</span><span class="badge resist">回避ダウン +5</span><div class="break"></div><span class="badge resist">ゆうわく +10</span><span class="badge resist">きょうふ +9</span><span class="badge resist">ふういん +6</span><span class="badge resist">ジャック +8</span><div class="break"></div></div>
+                
+                <div class="info-title">ドロップ</div>
+                <div class="drop-box"><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすり</span> <span class="drop-rate">50%</span></div><div class="drop-item"><span class="drop-name">・ぜんかいキズぐすりS</span> <span class="drop-rate">20%</span></div></div>
+                
+                <div class="info-title">行動パターン</div>
+                <div class="action-box">ガイアドラゴン☆は かみついてきた!<br>ガイアドラゴン☆の ファイアーブレス!<br>ガイアドラゴン☆の テイルアタック!<br>ガイアドラゴン☆の 岩石おとし!</div>
+            </div>
+        </div></div></body></html>
